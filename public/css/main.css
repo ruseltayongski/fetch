@@ -360,8 +360,34 @@ iframe {
   height: 250px;
 }
 
-.login100-form-btn {
+.google p{
+  text-align: center;
+  padding: 5px;
+  color: #333333;
+  font-weight: 100;
+  font-size: 25px;
+}
+
+.googleWrapper {
+  text-align: center;
+  background-color: #57b846;
+  padding: 10px 10px 10px 10px;
+  border-radius: 25px;
+}
+
+.googleWrapper p {
   font-family: Montserrat-Bold;
+  color: #fff;
+  font-size: 15px;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.googleWrapper:hover {
+  background-color: #333333;
+}
+
+.login100-form-btn {
   font-size: 15px;
   line-height: 1.5;
   color: #fff;

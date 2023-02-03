@@ -1,4 +1,5 @@
 <x-layout>
+    @include('sweetalert::alert')
     <div class="container">
         <div class="tableWrapper">
             <table class="table">
@@ -18,17 +19,18 @@
                             <td>{{ $row->request_type }}</td>
                             <td>{{ $row->sitio }}</td>
                             <td>{{ $row->purpose }}</td>
-                             <td>{{ $row->status }}</td>
-                    
+                            <td>{{ $row->status }}</td>
+                             <td> 
+                                <form method="POST" action="/cancel/{{ $row->id }}">
+                                    @csrf
 
-                           
-                                <a href="" class="">
-                                    <td class="editButton">Edit</td>
-                                </a>
-                            
-                          
-
-                            <td>Cancel Request</td>
+                                    @method('DELETE')
+                                    
+                                    <button class="btn btn-primary">
+                                        Cancel Request
+                                    </button>
+                                </form>
+                             </td>
                         </tr>    
                 </tbody>
                   @endforeach

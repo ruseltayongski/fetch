@@ -42,7 +42,7 @@ Route::post('/documents/save', [DocumentsController::class, 'sendRequest']);
 
 Route::post('/documents/update', [DocumentsController::class, 'documentUpdate']);
 
-Route::delete('/documents/{documents}',[DocumentsController::class, 'index']);
+Route::delete('/documents/{documents}',[DocumentsController::class, 'destroy']);
 
 Route::get('/documents/approved', [DocumentsController::class, 'documentApproved']);
 
@@ -51,6 +51,8 @@ Route::get('/documents/firebase/{document_id}', [DocumentsController::class, 'do
 Route::get('/documents', [ManagementController::class, 'request'])->middleware('auth');
 
 Route::get('/manage', [DocumentsController::class, 'manage'])->middleware('auth');
+
+Route::delete('/cancel/{documents}', [DocumentsController::class, 'cancelRequest']);
 
 //For Setting Appointment
 Route::get('full-calender', [FullCalendarController::class, 'index'])->middleware('auth');
@@ -61,3 +63,9 @@ Route::post('full-calender/action', [FullCalendarController::class, 'action']);
 Route::get('/admin', [AdminController::class, 'index'])->middleware(['auth','isAdmin'])/* ->middleware('guest') */;
 
 /* Route::post('/logout', [AdminController::class, 'adminLogout']); */
+
+//Google Login
+
+Route::get('auth/google', [UserController::class, 'redirect'])->name('google-auth');
+
+/* Route::post('auth/google/call-back', [UserController::class, 'store']); */

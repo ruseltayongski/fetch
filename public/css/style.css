@@ -1424,12 +1424,15 @@ top: 7px;
 left: 12px;
 }
 
+.cancelButton {
+     background-color: lightblue;
+}
+
 @media (min-width: 900px) {
 .notification-ui_icon .unread-notification {
      right: 20px;
      
 }
-
 
 }
 

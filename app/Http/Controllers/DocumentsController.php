@@ -42,9 +42,18 @@ class DocumentsController extends Controller
         ]);
     }
 
-    public function destroy(Documents $documents) {
-        $documents->delete();
+    public function destroy(Request $request) {
+        Documents::find($request->document_id)->delete();
     
+    }
+
+    public function cancelRequest(Documents $documents) {
+        $document = $documents->delete();
+
+        if($document) {
+            Alert::success('Success', 'You\'ve sucessfully cancel your request');
+            return redirect('/manage');
+        }
     }
 
     public function documentApproved() {

@@ -308,6 +308,7 @@
     }
 
     function confirmApproved() {
+      //console.log(document_id);
       $('#exampleModal').modal('hide');
       $.ajaxSetup({
           headers:{
@@ -333,22 +334,34 @@
       })
       $("#status"+document_id).html('<span class="status">Approved</span>');
       sendToFirebase(document_id, created_by);
+     
     }
 
     function decline() {
+      $('#secondModal').modal('hide');
       $.ajaxSetup({
           headers:{
               'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
           }
       });
       $.ajax({
-        url:"/documents/decline",
+        url:"/documents/{documents}",
         type:"DELETE",
         data:{
           document_id : document_id
-        };
-
+        },
+        success:function(response)
+          {
+            Lobibox.notify("success", {
+                title: "Delete",
+                size: 'normal',
+                img: "/images/logo.png",
+                msg: "Successfully Deleted!"
+            });
+          }
       })
+      $("#status"+document_id).html('<span class="status">Decline</span>');
+      sendToFirebase(document_id, created_by);
     }
 
     initFirebase();

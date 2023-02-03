@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -61,19 +62,53 @@ class UserController extends Controller
 
         $user = User::create($formFields);
 
-        auth()->login($user);
+       /*  $existing_user = $user::where('google_id', $google_user->getId())->first(); */
 
-        if ($user) {
+        try {
+
+            if($user) {
+                Alert::success('Success', 'You\'ve successfully registered!');
+                return redirect('/');
+
+                auth()->login($user);
+
+            }
+            else {
+                $google_user = Socialite::driver('google')->user();
+
+                $new_user = User::create([
+                    'name' => $google_user->getName(),
+                    'email' => $google_user->getEmail(),
+                    'google_id' => $google_user->getId()
+                ]);
+
+                auth()->login($new_user);
+
+                return redirect('/');
+            }
+
+            
+        } catch (\Throwable $th) {
+            dd('Something went Wrong!', $th->getMessage()); 
+        }
+
+        /* if ($user) {
             Alert::success('Success', 'You\'ve successfully registered!');
             return redirect('/');
         }
+
         else {
             Alert::error('Failed', 'Registration Failed');
             return back();
-        }
+        } */
         
         
    }
+
+   public function redirect() {
+        return Socialite::driver('google')->redirect();
+   }
+
 
    public function authenticate(Request $request) {
    
